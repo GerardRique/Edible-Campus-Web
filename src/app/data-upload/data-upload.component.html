@@ -1,0 +1,54 @@
+<mat-progress-bar mode="determinate" *ngIf="uploading" [value]="uploadPercentage" color="accent"></mat-progress-bar>
+<mat-horizontal-stepper #stepper>
+  <mat-step>
+    <ng-template matStepLabel>Excel Upload</ng-template>
+    <div class="file-drag">
+      <p>Drag Excel File Here to Upload</p>
+      <input type="file" class="file-input" (change)="readExcel($event)" multiple="false" />
+    </div>
+    <div>
+      <button mat-fab color="primary" class="forward_fab" *ngIf="excelUpload === false" matStepperNext><mat-icon class="example-icon">arrow_forward</mat-icon></button>
+    </div>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Image Upload</ng-template>
+    <div class="file-drag">
+      <p>Drag Image Files Here to Upload</p>
+      <input type="file" class="file-input" (change)="startUpload($event.target.files)" multiple="false" />
+    </div>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button matStepperNext>Next</button>
+    </div>
+    <div>
+      <button mat-fab color="primary" class="forward_fab" matStepperNext><mat-icon class="example-icon">arrow_forward</mat-icon></button>
+    </div>
+  </mat-step>
+  <mat-step> 
+    <ng-template matStepLabel>Review</ng-template>
+    <div>
+      <div class="speciesListingConatiner">
+        <mat-grid-list cols="3" rowHeight="800px" gutterSize="10px">
+          <mat-grid-tile *ngFor="let species of speciesListing">
+            <mat-card class="species-card">
+              <mat-card-header>
+                <div mat-card-avatar [ngStyle]="setStyles(species.countryOfOrigin)"><p class="avatar-text"></p></div>
+                <mat-card-title>{{species.name}} ({{species.scientificName}})</mat-card-title>
+                <mat-card-subtitle>Other Names: {{species.otherNames}}</mat-card-subtitle>
+              </mat-card-header>
+              <img mat-card-image class="species-image" src="{{imageMap.get(species.name)}}" >
+              <mat-card-content>
+                <p>Plant Characteristics <img class="data-icon" src="../../assets/Plant_Characteristics_Icon.png"/></p>
+                <p>{{species.speciesCharacteristics}}</p>
+                <p>Value Addition and Uses <img class="info-data-icon" src="../../assets/Information_Icon.png"/></p>
+                <p>{{species.valueAdded}}</p>
+              </mat-card-content>
+            </mat-card>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-fab color="primary" (click)="beginDataUpload()" class="forward_fab" ><mat-icon class="example-icon">cloud_upload</mat-icon></button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -12,13 +12,27 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireStorageModule } from 'angularfire2/storage';
 import { AdminComponent } from './admin/admin.component';
+import { CampusComponent } from './campus/campus.component';
+import { DataUploadComponent } from './data-upload/data-upload.component';
+import { AdminEdibleTreeListingComponent } from './admin-edible-tree-listing/admin-edible-tree-listing.component';
+import { DatabaseModule } from '../modules/DatabaseModule';
+import { Utils } from '../modules/Utils';
+import { DropZoneDirective } from './drop-zone.directive';
+import { Constants } from '../modules/Constants';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    AdminComponent
+    AdminComponent,
+    CampusComponent,
+    DataUploadComponent,
+    AdminEdibleTreeListingComponent,
+    DropZoneDirective
   ],
   imports: [
     BrowserModule,
@@ -26,10 +40,15 @@ import { AdminComponent } from './admin/admin.component';
     AngularFireModule.initializeApp(environment.firebase),
     BrowserAnimationsModule,
     MaterialModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule,
+    AngularFireStorageModule
   ],
   providers: [
-    AngularFireAuth
+    AngularFireAuth,
+    DatabaseModule,
+    Utils,
+    Constants
   ],
   bootstrap: [AppComponent]
 })
